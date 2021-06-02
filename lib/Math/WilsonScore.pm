@@ -16,6 +16,33 @@ our %EXPORT_TAGS = (
                                  starRatingLowerBound)]
                    );
 
+=head1 NAME
+
+Math::WilsonScore - Wilson score confidence interval ratings function
+
+=head1 SYNOPSIS
+
+    use Math::WilsonScore qw(starRatingLowerBound ratingLowerBound
+                             ciLowerBound, pNormalDist);
+
+    my $stars = starRatingLowerBound(5, 4, 9, 17, 64);
+    # 5 one-star reviews
+    # 4 two-star reviews
+    # 9 three-star reviews
+    # 17 four-star reviews
+    # 64 five-star reviews
+
+    my $rating = ratingLowerBound(5, 14, 9, 17, 64);
+    # same as above but in [0, 1] range.
+
+    my $lower = ciLowerBound(39, 45);
+    my $lower = ciLowerBound(39, 45, 0.99);     # for 99% confidence
+    # 39 positive reviews out of 45 total
+
+    my $z = pNormalDist(1 - (1 - 0.95) / 2);
+
+=cut
+
 sub starRatingLowerBound {
     my @ratings = @_;
     if (scalar(@ratings) < 2) {
