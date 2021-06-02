@@ -27,6 +27,26 @@ sub starRatingLowerBound {
     return $result;
 }
 
+# given:
+#     @ratings - the number of ratings giving each score from 0 to 1,
+#                where the first member is the number of ratings at score 0,
+#                and the last member is the number of ratings at score 1.
+#                e.g., (14, 8, 3, 5, 28)
+#                represents 14 one-star (score of 0.0) ratings,
+#                           8 two-star (0.25) ratings,
+#                           3 three-star (0.5) ratings,
+#                           5 four-star (0.75) ratings, and
+#                           28 five-star (1.0) ratings
+# For this forumula, we take the average of the ratings, and compute
+# a lower bound in the range [0, 1] from it.
+#
+# returns, in scalar context:
+#     $result - the lower bound at 95% confidence interval, in [0, 1]
+#
+# returns, in array context:
+#     ($result, $phat)
+#     $result - same as above
+#     $phat - the weighted average of the scores, also in [0, 1]
 sub ratingLowerBound {
     my @ratings = @_;
     if (scalar(@ratings) < 2) {
@@ -52,6 +72,21 @@ sub ratingLowerBound {
     return $result;
 }
 
+# https://www.evanmiller.org/how-not-to-sort-by-average-rating.html
+#
+# This function is for simple positive/negative reviews.
+# Negative reviews are considered 0; positive considered 1.
+#
+# given:
+#     $pos        - number of positive reviews
+#     $n          - total number of reviews
+#     $confidence - chance we want that the lower bound returned is correct
+#                   e.g., 0.95 for a 95% chance
+#                   default is 0.95
+#
+# returns:
+#     the lower bound of the average score in the range [0, 1]
+#     given a 95% confidence interval.
 sub ciLowerBound {
     my ($pos, $n, $confidence) = @_;
     $confidence //= 0.95;
@@ -66,6 +101,7 @@ sub ciLowerBound {
               (1 + $z * $z / $n);
 }
 
+# https://stackoverflow.com/questions/6116770/whats-the-equivalent-of-rubys-pNormalDist-statistics-function-in-haskell
 sub pNormalDist {
     my ($qn) = @_;
     my @b = (1.570796288, 0.03706987906, -0.8364353589e-3,
