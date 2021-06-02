@@ -1,4 +1,7 @@
 package Math::WilsonScore;
+use warnings;
+use strict;
+use feature 'state';
 
 use base 'Exporter';
 our @EXPORT = qw();
@@ -88,13 +91,15 @@ sub ratingLowerBound {
 #     the lower bound of the average score in the range [0, 1]
 #     given a 95% confidence interval.
 sub ciLowerBound {
+    state %pNormalDist;
     my ($pos, $n, $confidence) = @_;
     $confidence //= 0.95;
 
     if ($n == 0) {
         return 0;
     }
-    my $z = pNormalDist(1 - (1 - $confidence) / 2);
+    my $z = ($pNormalDist{$confidence} //=
+             pNormalDist(1 - (1 - $confidence) / 2));
     my $phat = 1.0 * $pos / $n;
     return ($phat + $z * $z / (2 * $n) -
             $z * sqrt(($phat * (1 - $phat) + $z * $z / (4 * $n)) / $n)) /
