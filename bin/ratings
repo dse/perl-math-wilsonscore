@@ -12,8 +12,8 @@ use strict;
 use FindBin;
 use lib "${FindBin::Bin}/../lib";
 
-use Math::WilsonScore qw(ratingLowerBound
-                         starRatingLowerBound);
+use Math::ProductRatings::WilsonScore qw(ratingLowerBound
+                                         starRatingLowerBound);
 use Term::Cap;
 use POSIX qw();
 

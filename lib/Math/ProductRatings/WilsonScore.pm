@@ -1,4 +1,4 @@
-package Math::WilsonScore;
+package Math::ProductRatings::WilsonScore;
 use warnings;
 use strict;
 use feature 'state';
@@ -18,12 +18,15 @@ our %EXPORT_TAGS = (
 
 =head1 NAME
 
-Math::WilsonScore - Wilson score confidence interval ratings function
+Math::ProductRatings::WilsonScore - Wilson score confidence interval ratings function
 
 =head1 SYNOPSIS
 
-    use Math::WilsonScore qw(starRatingLowerBound ratingLowerBound
-                             ciLowerBound, pNormalDist);
+    use Math::ProductRatings::WilsonScore qw(starRatingLowerBound
+                                             ratingLowerBound
+                                             ciLowerBound
+                                             pNormalDist);
+    # (or just whichever functions you need)
 
     my $stars = starRatingLowerBound(5, 4, 9, 17, 64);
     # returns about 3.98, for 3.98 out of 5 stars.
