@@ -20,19 +20,17 @@ my $terminal = Term::Cap->Tgetent({ TERM => undef, OSPEED => $ospeed });
 
 my $bold  = $terminal->Tputs('md');
 my $reset = $terminal->Tputs('me');
-my $green = $terminal->Tputs('Sf', 2);
 
 if (!-t 1) {
     $bold = '';
     $reset = '';
-    $green = '';
 }
 
 printf('%4d ', $_) foreach @ratings;
 printf('=> %.3f', $lowerBound);
 if (scalar @ratings == 5) {
     printf(' = %s%4.2f out of 5 stars%s',
-           $green,
+           $bold,
            (1 + $lowerBound * 4),
            $reset);
 }
