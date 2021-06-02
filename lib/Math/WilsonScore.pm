@@ -26,14 +26,17 @@ Math::WilsonScore - Wilson score confidence interval ratings function
                              ciLowerBound, pNormalDist);
 
     my $stars = starRatingLowerBound(5, 4, 9, 17, 64);
-    # 5 one-star reviews
-    # 4 two-star reviews
-    # 9 three-star reviews
-    # 17 four-star reviews
-    # 64 five-star reviews
+    # returns about 3.98, for 3.98 out of 5 stars.
+    # given:
+    #     5 one-star reviews
+    #     4 two-star reviews
+    #     9 three-star reviews
+    #     17 four-star reviews
+    #     64 five-star reviews2
 
     my $rating = ratingLowerBound(5, 14, 9, 17, 64);
-    # same as above but in [0, 1] range.
+    # returns about 0.745, or 3.98 as returned above and
+    # converted from the range [1, 5] to [0, 1].
 
     my $lower = ciLowerBound(39, 45);
     my $lower = ciLowerBound(39, 45, 0.99);     # for 99% confidence
